@@ -2,6 +2,8 @@ package us.ossowitz.BootApplication.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import lombok.Getter;
+import lombok.Setter;
 import us.ossowitz.BootApplication.util.personValidator.perkValidator.PerkPersonConstraint;
 
 import java.util.List;
@@ -10,6 +12,8 @@ import static us.ossowitz.BootApplication.models.Perk.*;
 
 @Entity
 @Table(name = "person")
+@Getter
+@Setter
 public class Person {
 
     @Id
@@ -51,69 +55,5 @@ public class Person {
     private List<Book> books;
 
     public Person() {
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public void setPerk(Perk perk) {
-        this.perk = perk;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public Perk getPerk() {
-        return perk;
-    }
-
-    public List<Book> getBooks() {
-        return books;
-    }
-
-    public void setBooks(List<Book> books) {
-        this.books = books;
     }
 }
