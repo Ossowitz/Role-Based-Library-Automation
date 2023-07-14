@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Show main title with full books list</title>
+</head>
+<body>
+
+<div id="time"></div>
+
+<!--Show current time-->
+<script>
+    var timeElement = document.getElementById("time");
+    function updateTime() {
+        var currentTime = new Date();
+        var formattedTime = currentTime.getHours() + ":" +
+            (currentTime.getMinutes() < 10 ? "0" : "") + currentTime.getMinutes() + ":" +
+            (currentTime.getSeconds() < 10 ? "0" : "") + currentTime.getSeconds();
+        timeElement.textContent = "Current time: " + formattedTime;
+    }
+    updateTime();
+    setInterval(updateTime, 1000);
+</script>
+
+<h1>Books</h1>
+
+<!--Show books list-->
+<div th:each="book : ${books}">
+    <a th:href="@{/books/{id}(id=${book.getId()})}"
+       th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYear()}">book</a>
+</div>
+
+<br/>
+
+<a href="/books/new">Add new book</a>
+
+</body>
+</html>

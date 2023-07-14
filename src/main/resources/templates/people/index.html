@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Show main title with full people list</title>
+</head>
+<body>
+
+<div id="time"></div>
+
+<script>
+    // Получаем ссылку на элемент, в котором будет отображаться время
+    var timeElement = document.getElementById("time");
+
+    // Функция для обновления времени каждую секунду
+    function updateTime() {
+        // Создаем новый объект Date для получения текущего времени
+        var currentTime = new Date();
+
+        // Форматируем время в виде строки HH:MM:SS
+        var formattedTime = currentTime.getHours() + ":" +
+            (currentTime.getMinutes() < 10 ? "0" : "") + currentTime.getMinutes() + ":" +
+            (currentTime.getSeconds() < 10 ? "0" : "") + currentTime.getSeconds();
+
+        // Устанавливаем отформатированное время как текст элемента
+        timeElement.textContent = "Current time: " + formattedTime;
+    }
+
+    // Вызываем функцию updateTime() при загрузке страницы и каждую секунду
+    updateTime();
+    setInterval(updateTime, 1000);
+</script>
+
+<h1>Show main title with full people list</h1>
+
+<div th:each="person : ${people}">
+    <a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getName() + ', ' + person.getAge()}">person</a>
+</div>
+<br/>
+<hr/>
+<br/>
+
+<a href="/people/new">Add new person</a>
+
+</body>
+</html>
