@@ -10,6 +10,6 @@ public class AdminController {
 
     @GetMapping()
     public String ai() {
-        return "admin/ai";
+        return "admin/main";
     }
 }
