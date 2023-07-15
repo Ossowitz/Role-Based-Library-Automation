@@ -10,6 +10,6 @@ public class AdminController {
 
     @GetMapping()
     public String ai() {
-        return "people/ai";
+        return "admin/ai";
     }
 }
