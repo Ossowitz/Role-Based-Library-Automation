@@ -48,7 +48,7 @@ public class Person {
     private String phoneNumber;
 
     @Enumerated(EnumType.STRING)
-    @PerkPersonConstraint(anyOf = {READERSHIP, MENTOR, VIP, STAFF})
+    @PerkPersonConstraint(anyOf = {READERSHIP, LIBRARIAN})
     private Perk perk;
 
     @OneToMany(mappedBy = "owner")
