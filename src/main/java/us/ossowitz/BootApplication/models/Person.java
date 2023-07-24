@@ -51,6 +51,9 @@ public class Person {
     @PerkPersonConstraint(anyOf = {READERSHIP, LIBRARIAN})
     private Perk perk;
 
+    @Column(name = "password")
+    private String password;
+
     @OneToMany(mappedBy = "owner")
     private List<Book> books;
 
