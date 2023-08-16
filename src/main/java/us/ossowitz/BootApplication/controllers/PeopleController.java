@@ -42,6 +42,7 @@ public class PeopleController {
     @PostMapping
     public ResponseEntity<?> addPerson(@RequestBody @Valid Person person,
                                        BindingResult bindingResult) {
+        personValidator.validate(person, bindingResult);
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
         }
@@ -53,6 +54,7 @@ public class PeopleController {
     public ResponseEntity<?> updatePerson(@PathVariable("id") int id,
                                                @RequestBody Person updatedPerson,
                                                BindingResult bindingResult) {
+        personValidator.validate(updatedPerson, bindingResult);
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
         }
