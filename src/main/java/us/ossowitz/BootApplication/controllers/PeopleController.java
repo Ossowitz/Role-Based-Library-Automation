@@ -2,6 +2,7 @@ package us.ossowitz.BootApplication.controllers;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -40,11 +41,30 @@ public class PeopleController {
 
     @PostMapping
     public ResponseEntity<?> addPerson(@RequestBody @Valid Person person,
-                                            BindingResult bindingResult) {
+                                       BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
         }
         peopleService.save(person);
         return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> updatePerson(@PathVariable("id") int id,
+                                               @RequestBody Person updatedPerson,
+                                               BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
+        }
+        Person person = peopleService.getPersonById(id);
+
+        if (person != null) {
+            BeanUtils.copyProperties(updatedPerson, person);
+            peopleService.update(id, person);
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
