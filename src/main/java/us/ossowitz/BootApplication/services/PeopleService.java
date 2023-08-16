@@ -2,15 +2,11 @@ package us.ossowitz.BootApplication.services;
 
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import us.ossowitz.BootApplication.models.Book;
 import us.ossowitz.BootApplication.models.Person;
 import us.ossowitz.BootApplication.repositories.PeopleRepository;
-import us.ossowitz.BootApplication.security.PersonWrapper;
 import us.ossowitz.BootApplication.util.exception.NotFoundException;
 
 import java.util.Collections;
@@ -20,7 +16,7 @@ import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
-public class PeopleService implements UserDetailsService {
+public class PeopleService {
 
     private final PeopleRepository peopleRepository;
 
@@ -91,10 +87,5 @@ public class PeopleService implements UserDetailsService {
     public Person checkByPersonName(String name) {
         return peopleRepository.findByName(name)
                 .orElseThrow(() -> new NotFoundException(NOT_REGISTERED));
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-        return new PersonWrapper(checkByPersonName(name));
     }
 }

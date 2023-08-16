@@ -27,11 +27,6 @@ public class Book {
     @Column(name = "author")
     private String author;
 
-    @NotNull
-    @Min(value = 0, message = "Publication year should be greater than 0")
-    @Column(name = "year")
-    private int year;
-
     @Digits(integer = 6, message = "«VendorCode» should contain exactly 6 digits", fraction = 0)
     @Column(name = "vendor_code")
     private int vendorCode;
