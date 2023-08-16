@@ -14,7 +14,7 @@ import us.ossowitz.BootApplication.util.bookValidator.BookValidator;
 
 @Controller
 @RequestMapping("/books")
-public class BooksController {
+public class BooksController1 {
 
     private final BooksService booksService;
     private final PeopleService peopleService;
@@ -22,7 +22,7 @@ public class BooksController {
     private final BookValidator bookValidator;
 
     @Autowired
-    public BooksController(BooksService booksService, PeopleService peopleService, BookValidator bookValidator) {
+    public BooksController1(BooksService booksService, PeopleService peopleService, BookValidator bookValidator) {
         this.booksService = booksService;
         this.peopleService = peopleService;
         this.bookValidator = bookValidator;
