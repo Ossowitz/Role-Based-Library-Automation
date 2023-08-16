@@ -31,7 +31,7 @@ public class PeopleService {
         return peopleRepository.findAll();
     }
 
-    public Person findOne(int id) {
+    public Person getPersonById(int id) {
         Optional<Person> foundPerson = peopleRepository.findById(id);
         return foundPerson.orElse(null);
     }
