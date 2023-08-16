@@ -3,14 +3,14 @@ package us.ossowitz.BootApplication.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "book")
-@Getter
-@Setter
+@Getter @Setter @NoArgsConstructor
 public class Book {
     @Id
     @Column(name = "id")
@@ -46,7 +46,4 @@ public class Book {
 
     @Transient
     private boolean expired;
-
-    public Book() {
-    }
 }

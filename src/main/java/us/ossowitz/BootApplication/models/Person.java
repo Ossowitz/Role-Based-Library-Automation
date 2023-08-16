@@ -3,6 +3,7 @@ package us.ossowitz.BootApplication.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import us.ossowitz.BootApplication.util.personValidator.perkValidator.PerkPersonConstraint;
 
@@ -12,8 +13,7 @@ import static us.ossowitz.BootApplication.models.Perk.*;
 
 @Entity
 @Table(name = "person")
-@Getter
-@Setter
+@Getter @Setter @NoArgsConstructor
 public class Person {
 
     @Id
@@ -56,7 +56,4 @@ public class Person {
 
     @OneToMany(mappedBy = "owner")
     private List<Book> books;
-
-    public Person() {
-    }
 }
