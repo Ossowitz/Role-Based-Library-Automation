@@ -6,6 +6,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import us.ossowitz.BootApplication.models.Person;
 import us.ossowitz.BootApplication.services.PeopleService;
@@ -32,11 +33,9 @@ public class PeopleController {
     public ResponseEntity<Person> getPersonById(@PathVariable("id") int id) {
         Person person = peopleService.getPersonById(id);
 
-        if (person != null) {
-            return ResponseEntity.ok(person);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return (person != null)
+                ? new ResponseEntity<>(person, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping
@@ -44,10 +43,10 @@ public class PeopleController {
                                        BindingResult bindingResult) {
         personValidator.validate(person, bindingResult);
         if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
+            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
         }
         peopleService.save(person);
-        return ResponseEntity.ok().build();
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PatchMapping("/{id}")
@@ -56,28 +55,25 @@ public class PeopleController {
                                           BindingResult bindingResult) {
         personValidator.validate(updatedPerson, bindingResult);
         if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
+            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
         }
         Person person = peopleService.getPersonById(id);
 
         if (person != null) {
             BeanUtils.copyProperties(updatedPerson, person);
             peopleService.update(id, person);
-
             return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePerson(@PathVariable int id) {
         boolean isDeletedPerson = peopleService.delete(id);
-
-        if (isDeletedPerson) {
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return isDeletedPerson
+                ? new ResponseEntity<>(HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
