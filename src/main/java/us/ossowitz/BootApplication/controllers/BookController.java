@@ -37,6 +37,15 @@ public class BookController {
         return new ResponseEntity<>(books, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Book> getBookById(@PathVariable("id") int id) {
+        Book book = booksService.findOne(id);
+
+        return (book != null)
+                ? new ResponseEntity<>(book, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @GetMapping("/{id}/info")
     public ResponseEntity<?> getPersonByBookId(@PathVariable("id") int id) {
         Person bookOwner = booksService.getBookOwner(id);
