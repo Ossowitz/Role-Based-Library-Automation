@@ -38,9 +38,7 @@ public class BookController {
     }
 
     @GetMapping("/{id}/info")
-    public ResponseEntity<?> getPersonByBookId(
-            @PathVariable("id") int id
-    ) {
+    public ResponseEntity<?> getPersonByBookId(@PathVariable("id") int id) {
         Person bookOwner = booksService.getBookOwner(id);
         if (bookOwner == null) {
             List<Person> people = peopleService.findAll();
