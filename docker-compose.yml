@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: historyweed
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: library
+    ports:
+      - 5432:5432
+
+  liquibase:
+    image: liquibase/liquibase
+    depends_on:
+      - db
+    volumes:
+      - ./db/changelog:/liquibase/changelog
+    command: --changeLogFile=/liquibase/changelog/db.changelog-master.yml
+      --url=jdbc:postgresql://db:5432/library
+      --username=historyweed
+      --password=pass
