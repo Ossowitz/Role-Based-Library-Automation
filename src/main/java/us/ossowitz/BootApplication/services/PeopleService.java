@@ -48,8 +48,14 @@ public class PeopleService {
     }
 
     @Transactional
-    public void delete(int id) {
-        peopleRepository.deleteById(id);
+    public boolean delete(int id) {
+        Optional<Person> personOptional = peopleRepository.findById(id);
+        if (personOptional.isPresent()) {
+            peopleRepository.deleteById(id);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public Optional<Person> getPersonByName(String name) {

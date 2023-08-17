@@ -52,8 +52,8 @@ public class PeopleController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<?> updatePerson(@PathVariable("id") int id,
-                                               @RequestBody Person updatedPerson,
-                                               BindingResult bindingResult) {
+                                          @RequestBody Person updatedPerson,
+                                          BindingResult bindingResult) {
         personValidator.validate(updatedPerson, bindingResult);
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
@@ -68,5 +68,16 @@ public class PeopleController {
         }
 
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletePerson(@PathVariable int id) {
+        boolean isDeletedPerson = peopleService.delete(id);
+
+        if (isDeletedPerson) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
