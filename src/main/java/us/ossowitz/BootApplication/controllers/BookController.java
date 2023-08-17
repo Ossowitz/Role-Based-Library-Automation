@@ -1,8 +1,10 @@
 package us.ossowitz.BootApplication.controllers;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import us.ossowitz.BootApplication.models.Book;
 import us.ossowitz.BootApplication.models.Person;
@@ -55,5 +57,16 @@ public class BookController {
         } else {
             return new ResponseEntity<>(bookOwner, HttpStatus.OK);
         }
+    }
+
+    @PostMapping
+    public ResponseEntity<?> addBook(@RequestBody @Valid Book book,
+                                     BindingResult bindingResult) {
+        bookValidator.validate(book, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
+        }
+        booksService.save(book);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
