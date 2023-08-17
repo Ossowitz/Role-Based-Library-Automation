@@ -3,11 +3,9 @@ package us.ossowitz.BootApplication.controllers;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import us.ossowitz.BootApplication.models.Book;
+import us.ossowitz.BootApplication.models.Person;
 import us.ossowitz.BootApplication.services.BooksService;
 import us.ossowitz.BootApplication.services.PeopleService;
 import us.ossowitz.BootApplication.util.bookValidator.BookValidator;
@@ -37,5 +35,18 @@ public class BookController {
             books = booksService.findWithPagination(page, booksPerPage, sortByYear);
         }
         return new ResponseEntity<>(books, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/info")
+    public ResponseEntity<?> getPersonByBookId(
+            @PathVariable("id") int id
+    ) {
+        Person bookOwner = booksService.getBookOwner(id);
+        if (bookOwner == null) {
+            List<Person> people = peopleService.findAll();
+            return new ResponseEntity<>(people, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(bookOwner, HttpStatus.OK);
+        }
     }
 }
