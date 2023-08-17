@@ -1,9 +1,0 @@
-2023-08-17 12:06:24 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "DATABASECHANGELOG" not found (this database is empty); SQL statement:
-SELECT COUNT(*) FROM PUBLIC.DATABASECHANGELOG [42104-214]
-2023-08-17 12:06:24 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "DATABASECHANGELOGLOCK" not found (this database is empty); SQL statement:
-SELECT COUNT(*) FROM PUBLIC.DATABASECHANGELOGLOCK [42104-214]
-2023-08-17 12:15:29 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLNonTransientException: Объект уже закрыт
-The object is already closed [90007-214]
