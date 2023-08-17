@@ -2,6 +2,7 @@ package us.ossowitz.BootApplication.controllers;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -70,7 +71,26 @@ public class BookController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> updatePerson(@PathVariable("id") int id,
+                                          @RequestBody @Valid Book updatedBook,
+                                          BindingResult bindingResult) {
+        bookValidator.validate(updatedBook, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
+        }
+        Book book = booksService.findOne(id);
+
+        if (book != null) {
+            BeanUtils.copyProperties(updatedBook, book);
+            booksService.update(id, book);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteBook(@PathVariable("id") int id) {
         boolean isDeletedBook = booksService.delete(id);
         return isDeletedBook

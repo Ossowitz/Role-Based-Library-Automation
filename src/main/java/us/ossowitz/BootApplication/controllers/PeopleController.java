@@ -51,7 +51,7 @@ public class PeopleController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<?> updatePerson(@PathVariable("id") int id,
-                                          @RequestBody Person updatedPerson,
+                                          @RequestBody @Valid Person updatedPerson,
                                           BindingResult bindingResult) {
         personValidator.validate(updatedPerson, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -66,7 +66,6 @@ public class PeopleController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
     }
 
     @DeleteMapping("/{id}")
