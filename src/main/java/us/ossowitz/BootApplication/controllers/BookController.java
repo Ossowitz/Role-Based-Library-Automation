@@ -15,7 +15,7 @@ import us.ossowitz.BootApplication.util.bookValidator.BookValidator;
 import java.util.List;
 
 @RestController
-@RequestMapping("/books")
+@RequestMapping("/api/v1/books")
 @AllArgsConstructor
 public class BookController {
 
@@ -68,5 +68,13 @@ public class BookController {
         }
         booksService.save(book);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<?> deleteBook(@PathVariable("id") int id) {
+        boolean isDeletedBook = booksService.delete(id);
+        return isDeletedBook
+                ? new ResponseEntity<>(HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

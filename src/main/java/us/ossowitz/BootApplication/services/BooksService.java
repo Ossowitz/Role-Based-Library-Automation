@@ -73,8 +73,14 @@ public class BooksService {
     }
 
     @Transactional
-    public void delete(int id) {
-        booksRepository.deleteById(id);
+    public boolean delete(int id) {
+        Optional<Book> personOptional = booksRepository.findById(id);
+        if (personOptional.isPresent()) {
+            booksRepository.deleteById(id);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public Person getBookOwner(int id) {
