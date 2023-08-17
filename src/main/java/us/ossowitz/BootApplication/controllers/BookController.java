@@ -1,10 +1,41 @@
 package us.ossowitz.BootApplication.controllers;
 
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import us.ossowitz.BootApplication.models.Book;
+import us.ossowitz.BootApplication.services.BooksService;
+import us.ossowitz.BootApplication.services.PeopleService;
+import us.ossowitz.BootApplication.util.bookValidator.BookValidator;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/books")
+@AllArgsConstructor
 public class BookController {
 
+    private final BooksService booksService;
+
+    private final PeopleService peopleService;
+
+    private final BookValidator bookValidator;
+
+    @GetMapping
+    public ResponseEntity<List<Book>> getBooks(
+            @RequestParam(value = "page", required = false) Integer page,
+            @RequestParam(value = "booksPerPage", required = false) Integer booksPerPage,
+            @RequestParam(value = "sort_by_year", required = false) boolean sortByYear) {
+        List<Book> books;
+        if (page == null || booksPerPage == null) {
+            books = booksService.findAll(sortByYear);
+        } else {
+            books = booksService.findWithPagination(page, booksPerPage, sortByYear);
+        }
+        return new ResponseEntity<>(books, HttpStatus.OK);
+    }
 }
