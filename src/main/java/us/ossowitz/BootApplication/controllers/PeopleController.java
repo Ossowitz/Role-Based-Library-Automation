@@ -28,7 +28,7 @@ public class PeopleController {
         return new ResponseEntity<>(people, HttpStatus.OK);
     }
 
-    @GetMapping("/people/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Person> getPersonById(@PathVariable("id") int id) {
         Person person = peopleService.getPersonById(id);
 
