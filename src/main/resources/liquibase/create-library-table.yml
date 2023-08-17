@@ -81,7 +81,7 @@ databaseChangeLog:
                   name: person_id
                   type: int
                   constraints:
-                    nullable: false
+                    nullable: true
               - column:
                   name: taken_at
                   type: timestamp

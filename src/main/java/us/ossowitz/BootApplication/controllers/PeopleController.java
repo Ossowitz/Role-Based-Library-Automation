@@ -70,7 +70,7 @@ public class PeopleController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deletePerson(@PathVariable int id) {
+    public ResponseEntity<?> deletePerson(@PathVariable("id") int id) {
         boolean isDeletedPerson = peopleService.delete(id);
         return isDeletedPerson
                 ? new ResponseEntity<>(HttpStatus.OK)
