@@ -2,7 +2,6 @@ package us.ossowitz.BootApplication.controllers;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
@@ -15,6 +14,7 @@ import us.ossowitz.BootApplication.services.BooksService;
 import us.ossowitz.BootApplication.services.PeopleService;
 import us.ossowitz.BootApplication.util.bookValidator.BookValidator;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
